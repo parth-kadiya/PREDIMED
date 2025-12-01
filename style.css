@@ -19,18 +19,18 @@ html, body {
     width: 100%;
     height: 100vh;
     
-    /* Background fit logic: Stretch to fill completely */
+    /* Background fit logic */
     background-size: 100% 100%; 
     background-position: center;
     background-repeat: no-repeat;
     
-    /* Flexbox for positioning */
+    /* Flexbox */
     display: flex;
     
     /* DESKTOP: Right Center */
     background-image: url('desk_bg.png');
     
-    /* Desktop par button Right side rahega */
+    /* Desktop layout */
     justify-content: flex-end; 
     align-items: center;       
 }
@@ -42,12 +42,12 @@ html, body {
     /* Desktop size & gap */
     padding: 15px 50px;
     font-size: 24px;
-    margin-right: 15%; /* Right gap for Desktop */
+    margin-right: 15%; 
     
     font-weight: bold;
     color: white;
     
-    /* Tumhara Gradient Color */
+    /* Gradient Color */
     background: linear-gradient(to right, #b6419b, #05bef0);
     
     border: none;
@@ -58,7 +58,7 @@ html, body {
     position: relative;
     outline: none;
     
-    /* Shadow bhi thoda purple tone me adjust kiya hai taaki gradient ke sath match kare */
+    /* Shadow adjusted for purple tone */
     box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7);
     
     animation: pulse-wave 2s infinite;
@@ -68,7 +68,6 @@ html, body {
 
 .wave-btn:hover {
     transform: scale(1.05);
-    /* Hover par gradient reverse direction me */
     background: linear-gradient(to right, #05bef0, #b6419b);
 }
 
@@ -94,22 +93,18 @@ html, body {
         height: auto;      
         min-height: 100vh; 
         
-        /* CHANGE: Horizontal Center & Vertical Bottom */
-        justify-content: center; 
+        justify-content: flex-end; 
         align-items: flex-end;        
         
-        /* Bottom se thoda space taaki button kate na */
-        padding-bottom: 150px; 
+        /* CHANGE: Pehle 150px tha, ab 110px kar diya taaki button niche aaye */
+        padding-bottom: 120px; 
     }
 
     .wave-btn {
         padding: 8px 22px;
         font-size: 14px;
-        
-        /* Margin 0 kar diya taaki perfect center me aaye */
-        margin: 0; 
-        
-        /* Thoda sa extra gap agar padding kam pade */
+        margin-right: 20px;
+        margin-left: 0; 
     }
 
     @keyframes pulse-wave {
@@ -135,21 +130,18 @@ html, body {
         height: auto;      
         min-height: 100vh; 
         
-        /* CHANGE: Horizontal Center & Vertical Bottom */
-        justify-content: center; 
+        justify-content: flex-end; 
         align-items: flex-end;        
         
-        /* Bottom se thoda space */
-        padding-bottom: 50px; 
+        /* CHANGE: Pehle 50px tha, ab 20px kar diya taaki button niche aaye */
+        padding-bottom: 20px; 
     }
 
     .wave-btn {
         padding: 8px 22px;
         font-size: 14px;
-        
-        /* Margin 0 kar diya taaki perfect center me aaye */
-        margin: 0; 
-        
+        margin-right: 20px;
+        margin-left: 0;
     }
 
     @keyframes pulse-wave {
@@ -176,26 +168,17 @@ html, body {
         height: auto;      
         min-height: 100vh; 
         
-        /* CHANGE: Horizontal Center & Vertical Bottom */
-        justify-content: center; 
+        justify-content: flex-end; 
         align-items: flex-end;        
         
-        /* Bottom se thoda space */
-        padding-bottom: 220px; 
+        /* CHANGE: Pehle 220px tha, ab 170px kar diya taaki button niche aaye */
+        padding-bottom: 180px; 
     }
 
     .wave-btn {
-        padding: 10px 30px; /* Tablet pe thoda bada button achha lagega */
+        padding: 10px 30px; 
         font-size: 16px;
-        
-        /* Margin 0 kar diya taaki perfect center me aaye */
-        margin: 0; 
-        
-    }
-
-    @keyframes pulse-wave {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+        margin-right: 30px; 
+        margin-left: 0;
     }
 }

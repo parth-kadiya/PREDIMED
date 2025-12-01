@@ -35,49 +35,45 @@ markers.forEach(marker => {
 function startDrag(e, marker) {
     e.preventDefault(); 
 
-    // =========================================================
-    // INSTANT IMAGE & COLOR SWAP LOGIC
-    // =========================================================
-    
-    // 1. Agar LDL (Pink) marker hai
-    if (marker.classList.contains('ldl-bg')) {
-        if(heartImgEl) heartImgEl.src = 'pink_heart.png'; // Image Pink Heart
-        
-        // Default Pink rehne do (Blue/Grey classes hata do)
-        if(heartOverlayEl) {
-            heartOverlayEl.classList.remove('theme-blue', 'theme-grey');
-        }
-    }
-    
-    // 2. Agar TG (Orange/Blue Context) marker hai
-    else if (marker.classList.contains('tg-bg')) {
-        if(heartImgEl) heartImgEl.src = 'blue_heart.png'; // Image Blue Heart
-        
-        // Blue Theme Add karo
-        if(heartOverlayEl) {
-            heartOverlayEl.classList.remove('theme-grey');
-            heartOverlayEl.classList.add('theme-blue');
-        }
-    }
-    
-    // 3. Agar HDL (Green/Grey Context) marker hai
-    else if (marker.classList.contains('hdl-bg')) {
-        if(heartImgEl) heartImgEl.src = 'grey_heart.png'; // Image Grey Heart
-        
-        // Grey Theme Add karo
-        if(heartOverlayEl) {
-            heartOverlayEl.classList.remove('theme-blue');
-            heartOverlayEl.classList.add('theme-grey');
-        }
-    }
-    // =========================================================
-    
     const container = marker.parentElement;
     const containerRect = container.getBoundingClientRect();
     const containerHeight = container.offsetHeight;
     const markerHeight = marker.offsetHeight;
 
     function onMove(event) {
+
+        // 1. Agar LDL (Pink) marker hai
+        if (marker.classList.contains('ldl-bg')) {
+            if(heartImgEl) heartImgEl.src = 'pink_heart.png'; // Image Pink Heart
+            
+            // Default Pink rehne do (Blue/Grey classes hata do)
+            if(heartOverlayEl) {
+                heartOverlayEl.classList.remove('theme-blue', 'theme-grey');
+            }
+        }
+        
+        // 2. Agar TG (Orange/Blue Context) marker hai
+        else if (marker.classList.contains('tg-bg')) {
+            if(heartImgEl) heartImgEl.src = 'blue_heart.png'; // Image Blue Heart
+            
+            // Blue Theme Add karo
+            if(heartOverlayEl) {
+                heartOverlayEl.classList.remove('theme-grey');
+                heartOverlayEl.classList.add('theme-blue');
+            }
+        }
+        
+        // 3. Agar HDL (Green/Grey Context) marker hai
+        else if (marker.classList.contains('hdl-bg')) {
+            if(heartImgEl) heartImgEl.src = 'grey_heart.png'; // Image Grey Heart
+            
+            // Grey Theme Add karo
+            if(heartOverlayEl) {
+                heartOverlayEl.classList.remove('theme-blue');
+                heartOverlayEl.classList.add('theme-grey');
+            }
+        }
+        
         let clientY;
         if (event.type.includes('touch')) {
             clientY = event.touches[0].clientY;
