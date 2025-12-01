@@ -76,39 +76,40 @@ html, body {
 /* --- MOBILE BACKGROUND LOGIC --- */
 @media screen and (max-width: 1025px) {
 
-    /* 1. Body ko scrollable banao mobile ke liye */
     html, body {
         overflow-y: auto; 
-        height: auto;     
+        height: auto;      
     }
 
     .main-container {
         background-image: url('m.png');
-
-        /* 2. Important: Width fit karo, Height auto badhne do */
         background-size: 100% auto;
-        
-        /* 3. Image ko Top se start karo taki gap na aaye */
         background-position: top center;
-        
-        /* 4. Container ki height content ke hisab se */
-        height: auto;      
+        height: auto;       
         min-height: 100vh; 
-
-        /* Mobile par button ko niche ya center lane ke liye layout adjust */
-        flex-direction: column;
-        justify-content: flex-end; /* Button niche */
-        align-items: center;       /* Button center */
-        padding-bottom: 50px;      /* Niche thodi jagah */
+        display: block; 
     }
 
-    /* Mobile Button Adjustment */
+    /* Mobile Button Adjustment - FIXED POSITION */
     .home-btn {
-        margin-left: 0; /* Left margin hata do mobile me */
-        margin-bottom: 20px;
+        position: fixed; 
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        
+        /* --- MAJOR CHANGES HERE --- */
+        white-space: nowrap;  /* IMPORTANT: Text ko tutne nahi dega */
+        min-width: 250px;     /* Button ki width badha di */
+        padding: 12px 20px;   /* Side padding thodi kam ki taki text fit rahe */
+        
+        margin: 0;
         font-size: 16px;
-        padding: 12px 30px;
-        gap: 8px; /* Mobile me gap thoda kam */
+        gap: 10px; 
+        z-index: 1000; 
+        
+        /* Center alignment ensure karne ke liye */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-
 }
