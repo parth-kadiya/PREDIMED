@@ -111,10 +111,4 @@ html, body {
         gap: 8px; /* Mobile me gap thoda kam */
     }
 
-    /* --- MOBILE KEYFRAMES (Choti Shadow: 15px) --- */
-    @keyframes pulse-wave {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(252, 14, 143, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(252, 14, 143, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(252, 14, 143, 0); }
-    }
 }

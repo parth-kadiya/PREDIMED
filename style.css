@@ -1,3 +1,5 @@
+/* style.css */
+
 /* Reset CSS */
 * {
     margin: 0;
@@ -8,7 +10,7 @@
 html, body {
     width: 100%;
     height: 100%;
-    overflow: hidden; /* No scrollbars for desktop default */
+    overflow: hidden; /* Desktop default: No scrollbars */
     font-family: Arial, sans-serif;
 }
 
@@ -30,19 +32,26 @@ html, body {
     /* DESKTOP: Right Center */
     background-image: url('desk_bg.png');
     
-    /* Desktop layout */
+    /* Desktop layout - Button alignment */
     justify-content: flex-end; 
-    align-items: center;       
+    
+    /* UPDATE: Button ko vertical center se hata kar niche laane ke liye */
+    align-items: flex-end;        
+    
+    /* UPDATE: Thoda padding diya taki button floor se chipak na jaye */
+    padding-bottom: 30px; 
 }
 
 /* =========================================
-   BUTTON STYLES & ANIMATION
+   BUTTON STYLES & ANIMATION (Base Styles)
    ========================================= */
 .wave-btn {
     /* Desktop size & gap */
     padding: 15px 50px;
     font-size: 24px;
-    margin-right: 15%; 
+    
+    /* UPDATE: Margin kam kiya taki right corner ke pass rahe */
+    margin-right: 5%; 
     
     font-weight: bold;
     color: white;
@@ -67,50 +76,84 @@ html, body {
 }
 
 .wave-btn:hover {
+    /* Hover par slight scale effect rakh sakte hain user interaction ke liye, 
+       ya ise bhi hata sakte hain agar bilkul movement nahi chahiye */
     transform: scale(1.05);
     background: linear-gradient(to right, #05bef0, #b6419b);
 }
 
+/* UPDATE: Desktop Animation - No Scale, Only Shadow */
 @keyframes pulse-wave {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 25px rgba(182, 65, 155, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 25px rgba(182, 65, 155, 0); /* Desktop Wave Size */
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(182, 65, 155, 0);
+    }
 }
 
 /* =========================================
-   MOBILE SIZE 1: Smallest (Max Width: 361px)
+   MOBILE GLOBAL FIX (Common for all mobiles)
    ========================================= */
-@media screen and (max-width: 361px) {
+/* Ye code 1025px se niche wale sabhi devices par apply hoga */
+@media screen and (max-width: 1025px) {
      html, body {
         overflow-y: auto; 
-        height: auto;     
+        height: auto;      
     }
     
     .main-container {
         background-image: url('mob_bg.png');
         background-position: top center;
         background-size: 100% auto; 
-        height: auto;      
+        height: auto;       
         min-height: 100vh; 
         
-        justify-content: flex-end; 
-        align-items: flex-end;        
-        
-        /* CHANGE: Pehle 150px tha, ab 110px kar diya taaki button niche aaye */
-        padding-bottom: 120px; 
+        /* Mobile me button container se control nahi hoga (Fixed position hai) */
+        display: block; 
     }
 
+    /* === MAGICAL FIX FOR BUTTON === */
+    .wave-btn {
+        position: fixed; /* Ye button ko screen pe chipka dega */
+        
+        /* Position logic: Screen ke bottom-right se */
+        right: 20px; 
+        
+        /* Bottom se 20px, iPhone Home Bar safe area included */
+        bottom: 20px; 
+        bottom: calc(20px + env(safe-area-inset-bottom)); 
+
+        /* Margin reset */
+        margin: 0; 
+        
+        z-index: 9999; 
+    }
+}
+
+/* =========================================
+   MOBILE SIZE 1: Smallest (Max Width: 361px)
+   ========================================= */
+@media screen and (max-width: 361px) {
     .wave-btn {
         padding: 8px 22px;
         font-size: 14px;
-        margin-right: 20px;
-        margin-left: 0; 
     }
 
+    /* UPDATE: Mobile Small Animation - No Scale */
     @keyframes pulse-wave {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+        0% {
+            box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); /* Mobile Wave Size */
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(182, 65, 155, 0);
+        }
     }
 }
 
@@ -118,67 +161,44 @@ html, body {
    MOBILE SIZE 2: Narrow Foldables (362px - 376px)
    ========================================= */
 @media screen and (min-width: 362px) and (max-width: 376px) {
-     html, body {
-        overflow-y: auto; 
-        height: auto;     
-    }
-    
-    .main-container {
-        background-image: url('mob_bg.png');
-        background-position: top center;
-        background-size: 100% auto; 
-        height: auto;      
-        min-height: 100vh; 
-        
-        justify-content: flex-end; 
-        align-items: flex-end;        
-        
-        /* CHANGE: Pehle 50px tha, ab 20px kar diya taaki button niche aaye */
-        padding-bottom: 20px; 
-    }
-
     .wave-btn {
         padding: 8px 22px;
         font-size: 14px;
-        margin-right: 20px;
-        margin-left: 0;
     }
 
+    /* UPDATE: Mobile Foldable Animation - No Scale */
     @keyframes pulse-wave {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+        0% {
+            box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); /* Mobile Wave Size */
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(182, 65, 155, 0);
+        }
     }
 }
 
 /* =========================================
    MOBILE SIZE 3: Tablets/Large Phones (377px - 1025px)
    ========================================= */
-@media screen and (min-width: 377px) and (max-width: 1025px) {
-
-    html, body {
-        overflow-y: auto; 
-        height: auto;     
-    }
-    
-    .main-container {
-        background-image: url('mob_bg.png');
-        background-position: top center;
-        background-size: 100% auto; 
-        height: auto;      
-        min-height: 100vh; 
-        
-        justify-content: flex-end; 
-        align-items: flex-end;        
-        
-        /* CHANGE: Pehle 220px tha, ab 170px kar diya taaki button niche aaye */
-        padding-bottom: 180px; 
-    }
-
+@media screen and (min-width: 377px) and (max-width: 767px) {
     .wave-btn {
         padding: 10px 30px; 
         font-size: 16px;
-        margin-right: 30px; 
-        margin-left: 0;
+    }
+
+    /* UPDATE: Tablet Animation - No Scale */
+    @keyframes pulse-wave {
+        0% {
+            box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); /* Tablet Wave Size */
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(182, 65, 155, 0);
+        }
     }
 }
