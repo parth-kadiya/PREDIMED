@@ -1,0 +1,128 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base Setup */
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Desktop pe scroll band */
+    font-family: Arial, sans-serif;
+}
+
+/* Desktop Background & Layout */
+.main-container {
+    width: 100%;
+    height: 100vh;
+
+    background-image: url('d.png');
+    background-size: 100% 100%;   /* Desktop par Stretch */
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* --- FLEXBOX FOR BUTTON POSITIONING --- */
+    display: flex;
+    /* Left side me align karne ke liye flex-start */
+    justify-content: flex-start; 
+    /* Vertical center karne ke liye */
+    align-items: center; 
+}
+
+/* --- BUTTON STYLE & ANIMATION --- */
+.home-btn {
+    text-decoration: none;
+    padding: 15px 40px;
+    font-size: 20px;
+    
+    /* Left side me thoda gap dene ke liye */
+    margin-left: 10%; 
+
+    font-weight: bold;
+    color: white;
+    background: #fc0e8f; /* Pink Theme match */
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    /* --- NEW: FLEXBOX FOR ICON & TEXT ALIGNMENT --- */
+    display: inline-flex;  /* Icon aur Text ek line me */
+    align-items: center;   /* Vertical Center */
+    justify-content: center;
+    gap: 10px;             /* Icon aur Text ke beech gap */
+
+    /* --- WAVE ANIMATION --- */
+    position: relative;
+    outline: none;
+    box-shadow: 0 0 0 0 rgba(252, 14, 143, 0.7);
+    animation: pulse-wave 2s infinite; 
+    transition: transform 0.2s, background 0.2s;
+    z-index: 10;
+}
+
+/* Arrow Icon Size Adjustment */
+.arrow-icon {
+    font-size: 1.2em; /* Arrow thoda bada dikhega text se */
+    line-height: 1;   /* Alignment perfect karne ke liye */
+}
+
+.home-btn:hover {
+    transform: scale(1.05);
+    background: #d60070;
+}
+
+/* --- DESKTOP KEYFRAMES (Badi Shadow: 25px) --- */
+@keyframes pulse-wave {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(252, 14, 143, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 25px rgba(252, 14, 143, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(252, 14, 143, 0); }
+}
+
+/* --- MOBILE BACKGROUND LOGIC --- */
+@media screen and (max-width: 1025px) {
+
+    /* 1. Body ko scrollable banao mobile ke liye */
+    html, body {
+        overflow-y: auto; 
+        height: auto;     
+    }
+
+    .main-container {
+        background-image: url('m.png');
+
+        /* 2. Important: Width fit karo, Height auto badhne do */
+        background-size: 100% auto;
+        
+        /* 3. Image ko Top se start karo taki gap na aaye */
+        background-position: top center;
+        
+        /* 4. Container ki height content ke hisab se */
+        height: auto;      
+        min-height: 100vh; 
+
+        /* Mobile par button ko niche ya center lane ke liye layout adjust */
+        flex-direction: column;
+        justify-content: flex-end; /* Button niche */
+        align-items: center;       /* Button center */
+        padding-bottom: 50px;      /* Niche thodi jagah */
+    }
+
+    /* Mobile Button Adjustment */
+    .home-btn {
+        margin-left: 0; /* Left margin hata do mobile me */
+        margin-bottom: 20px;
+        font-size: 16px;
+        padding: 12px 30px;
+        gap: 8px; /* Mobile me gap thoda kam */
+    }
+
+    /* --- MOBILE KEYFRAMES (Choti Shadow: 15px) --- */
+    @keyframes pulse-wave {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(252, 14, 143, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(252, 14, 143, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(252, 14, 143, 0); }
+    }
+}

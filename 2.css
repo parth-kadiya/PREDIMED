@@ -1,0 +1,1197 @@
+/* --- Reset & Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    background-color: #ffffff;
+    
+    /* --- NEW CHANGE: Desktop Image --- */
+    background-image: url('desktop.png');
+    background-size: cover;      /* Image puri screen cover karegi */
+    background-position: center; /* Image center me rahegi */
+    background-repeat: no-repeat;/* Image repeat nahi hogi */
+    background-attachment: fixed;/* Scroll karne par image fix rahegi */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 10px; 
+}
+
+/* --- Main Layout Container --- */
+.container {
+    width: 100%;
+    max-width: 1100px;
+    position: relative;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; 
+    
+    /* Yaha CHANGE hai: Niche wali line dhyan se dekho */
+    grid-template-areas: 
+        "graphic content"
+        "graphic charts"
+        ". footer";  /* Pehle ye "footer footer" tha, ab humne Left side '.' (empty) kar di aur Right side 'footer' rakha */
+        
+    column-gap: 50px;
+}
+
+.desktop-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 150px;
+    height: auto;
+    z-index: 20;
+    border-radius: 15px;
+    display: block; 
+}
+
+.mobile-footer-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    /* Desktop par width auto rakhenge taki sirf button ki jagah le */
+    width: auto; 
+}
+
+.mobile-logo {
+    display: none; 
+}
+
+/* --- Grid Area Assigning --- */
+.graphic-section { 
+    grid-area: graphic; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-section {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Left align styling */
+    text-align: left;
+    color: #ffffff; /* Pura text White */
+    width: fit-content;
+}
+
+.charts-container {
+    grid-area: charts;
+    display: flex;
+    justify-content: space-evenly; /* Space barabar bate */
+    align-items: flex-end; /* Niche se align */
+    
+    /* Card Styling */
+    background-color: #ecf0f1; /* Light Grey Background */
+    border-radius: 15px; /* Rounded Corners */
+    padding: 20px 10px; /* Andar gap */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* Card Shadow */
+    
+    margin-top: 40px;
+    width: 100%;
+    max-width: 500px; /* Thoda wide kiya */
+}
+
+/* --- Graphic Elements --- */
+.heart-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    display: inline-block; 
+}
+
+.heart-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* --- .heart-fill-overlay --- */
+.heart-fill-overlay {
+    position: absolute;
+    
+    /* --- NEW LOGIC: Shrink inner fill to leave space for White Border --- */
+    width: 95.4%;  /* Image se thoda chota */
+    height: 97%; /* Image se thoda chota */
+    
+    /* --- CENTER ALIGNMENT --- */
+    /* Ye logic overlay ko hamesha exact center me rakhega */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    background-color: transparent;
+    pointer-events: none;
+    
+    /* Masking Logic (Same as before) */
+    -webkit-mask-image: url('pink_heart.png');
+    mask-image: url('pink_heart.png');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    
+    --fill-percent: 0%;
+    --wave-color: #ed86b6;
+
+    /* Note: Purana 'clip-path' hata diya kyuki ab hum size chota kar rahe hain to cutting ki zarurat nahi */
+
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    
+}
+
+.heart-fill-overlay::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--fill-percent); 
+    background-color: var(--wave-color);
+    transition: height 0.1s linear;
+    z-index: 1;
+}
+
+.heart-fill-overlay::after {
+    content: "";
+    position: absolute;
+    
+    /* --- POSITION LOGIC (Desktop) --- */
+    /* Humne isse -10px kiya hai. Isse wave "Wavy" dikhegi, flat nahi. */
+    /* 0% par ye dikhega, lekin us waqt hum Container ki opacity 0 kar denge. */
+    bottom: calc(var(--fill-percent) - 10px); 
+    
+    left: 0;
+    width: 200%; 
+    height: 40px; 
+    
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1000 100' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><path d='M0,50 C150,100 350,0 500,50 C650,100 850,0 1000,50 V100 H0 Z' fill='%23ed86b6' fill-opacity='1'/></svg>");
+    
+    background-size: 50% 100%;
+    background-repeat: repeat-x;
+    
+    animation: wave-move 3s linear infinite; 
+    transition: bottom 0.1s linear;
+    z-index: 1;
+}
+
+/* --- NEW THEME CLASSES FOR DYNAMIC COLORS --- */
+
+/* Blue Theme (#97daf6) */
+.heart-fill-overlay.theme-blue {
+    --wave-color: #97daf6; /* Solid fill color update */
+}
+.heart-fill-overlay.theme-blue::after {
+    /* Wave SVG with Blue color (%2397daf6) */
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1000 100' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><path d='M0,50 C150,100 350,0 500,50 C650,100 850,0 1000,50 V100 H0 Z' fill='%2397daf6' fill-opacity='1'/></svg>");
+}
+
+/* Grey Theme (#d1d3d4) */
+.heart-fill-overlay.theme-grey {
+    --wave-color: #d1d3d4; /* Solid fill color update */
+}
+.heart-fill-overlay.theme-grey::after {
+    /* Wave SVG with Grey color (%23d1d3d4) */
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1000 100' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><path d='M0,50 C150,100 350,0 500,50 C650,100 850,0 1000,50 V100 H0 Z' fill='%23d1d3d4' fill-opacity='1'/></svg>");
+}
+
+.heart-fill-overlay.theme-dark-blue {
+    --wave-color: #7bccdf; /* Updated Color */
+}
+
+.heart-fill-overlay.theme-dark-blue::after {
+    /* Wave SVG with updated color (%237bccdf) */
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1000 100' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><path d='M0,50 C150,100 350,0 500,50 C650,100 850,0 1000,50 V100 H0 Z' fill='%237bccdf' fill-opacity='1'/></svg>");
+}
+
+@keyframes wave-move {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.mace-overlay {
+    position: absolute;
+    top: 35%; 
+    left: 45%;
+    transform: translate(-50%, -40px);
+    background-color: transparent;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.2;
+    width: 100%;
+    font-size: 1.5rem; /* "Increases MACE" size */
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    z-index: 10;
+    text-shadow: none;
+}
+
+.mace-overlay br + span { 
+    /* Agar 'by' alag span me nahi hai to direct text node style nahi hota, 
+       isliye hum line-height se adjust kar rahe hain */
+}
+
+.mace-overlay .big-text { 
+    font-size: 4.5rem; /* Bada 4% */
+    font-weight: 900; 
+    display: block; 
+    margin: -5px 0; /* Gap kam karne ke liye */
+    line-height: 1;
+}
+.mace-overlay.visible { opacity: 1; transform: translate(-50%, 0px); }
+
+.mace-overlay-5 {
+    position: absolute;
+    top: 33%; /* Thoda upar shift kiya taki fit aaye */
+    left: 45%;
+    transform: translate(-50%, -40px);
+    background-color: transparent;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.2;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    z-index: 10;
+    text-shadow: none;
+}
+.mace-overlay-5 .big-text { 
+    font-size: 4.5rem; /* Bada 5% */
+    font-weight: 900; 
+    display: block; 
+    margin-top: 5px; 
+    color: #ffffff; /* Screenshot me ye WHITE hai, pehle pink tha */
+    text-shadow: none;
+    line-height: 1;
+}
+
+.mace-overlay-5.visible { opacity: 1; transform: translate(-50%, 0px); }
+
+.mace-overlay-ldl {
+    position: absolute;
+    top: 40%; 
+    left: 45%;
+    transform: translate(-50%, -40px);
+    background-color: transparent;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.3;
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    z-index: 10;
+    text-shadow: none;
+}
+
+.mace-overlay-ldl .big-text { 
+    font-size: 4.5rem; /* Bada 1% */
+    font-weight: 800; 
+    display: block; 
+    margin-top: 5px; 
+    line-height: 1;
+}
+
+.mace-overlay-ldl.visible { opacity: 1; transform: translate(-50%, 0px); }
+
+.mace-overlay-final {
+    position: absolute;
+    top: 35%; 
+    left: 45%;
+    transform: translate(-50%, -40px);
+    background-color: transparent;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.2;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 500;
+    opacity: 0; /* Default hidden */
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.mace-overlay-final .big-text { 
+    font-size: 4.5rem; /* Bada 44% */
+    font-weight: 900; 
+    display: block; 
+    margin-top: 5px; 
+    line-height: 1;
+}
+
+.mace-overlay-final.visible { 
+    opacity: 1; 
+    transform: translate(-50%, 0px); 
+}
+
+/* --- Content Styling --- */
+.header-badge {
+    background-color: transparent; /* Background hataya */
+    color: #ffffff;
+    font-size: 1.1rem; /* Size thoda bada */
+    font-weight: 500;
+    padding: 0; /* Padding hatayi */
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+    text-transform: capitalize; /* Proper casing */
+}
+
+.main-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem; /* Screenshot jaisa bada size */
+    font-weight: 900; /* Extra Bold */
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase; /* Sab capital me */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Halka shadow depth ke liye */
+    white-space: nowrap;
+}
+
+.sub-info {
+    display: flex;
+    gap: 10px; /* Dono text ke beech gap */
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9); /* Thoda sa transparent white */
+    font-weight: 300; /* Thin font */
+}
+
+.sub-info p {
+    margin: 0;
+    line-height: 1;
+}
+
+/* Pipe divider styling (Optional, agar screenshot jaisa pipe chahiye) */
+.sub-info p:first-child::after {
+    content: "|";
+    margin-left: 15px;
+    opacity: 0.7;
+}
+
+/* --- Charts Styling --- */
+.chart-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%; /* 3 parts me divide */
+    position: relative;
+    
+    /* Dotted Line Separator (Right side) */
+    border-right: 2px dotted #bdc3c7; 
+}
+
+.chart-item:last-child {
+    border-right: none;
+}
+
+.chart-label {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.ldl-color { color: #b04a99; } /* Screenshot jaisa Purple */
+.tg-color { color: #c46826; }  /* Screenshot jaisa Orange */
+.hdl-color { color: #4b7a2a; } /* Screenshot jaisa Green */
+
+.bar-container {
+    position: relative;
+    height: 160px; /* Height adjust ki */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.bar-tube {
+    width: 45px; /* Tube ko chouda (wide) kiya */
+    height: 100%;
+    
+    background-color: #9ea7ad; /* Dark Grey Tube Color */
+    border: none; /* Border hataya */
+    border-radius: 30px; /* Tube ke ends round kiye */
+    
+    /* Inset Shadow se "Gadda" (Cutout) look aayega */
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2), inset -1px -1px 3px rgba(255,255,255,0.3);
+}
+
+body.grabbing,
+body.grabbing * {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23ffffff' stroke='%23000000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2v20'/><path d='m7 7 5-5 5 5'/><path d='m7 17 5 5 5-5'/></svg>") 16 16, ns-resize !important;
+}
+
+.bar-marker {
+    position: absolute;
+    width: 65px; 
+    height: 14px; 
+    border-radius: 10px; 
+    
+    bottom: 10px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    
+    z-index: 2;
+    
+    /* --- OLD CURSOR REMOVED: cursor: ns-resize; --- */
+    
+    /* --- NEW STYLISH CURSOR --- */
+    /* Ye ek custom SVG image hai jo bada arrow dikhayega */
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23ffffff' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2v20'/><path d='m7 7 5-5 5 5'/><path d='m7 17 5 5 5-5'/></svg>") 16 16, ns-resize;
+    
+    touch-action: none;
+    
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    
+    /* Optional: Jab hover ho to thoda scale effect bhi de sakte ho taaki interactive lage */
+    transition: transform 0.1s ease, background-color 0.2s;
+}
+
+.bar-marker:active {
+    transform: translateX(-50%) scale(1.1); /* Thoda bada ho jayega dabane par */
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23ffffff' stroke='%23000000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2v20'/><path d='m7 7 5-5 5 5'/><path d='m7 17 5 5 5-5'/></svg>") 16 16, ns-resize;
+}
+
+.ldl-bg { background-color: #e31787; } /* Purple Marker */
+/* Screenshot me TG ka Marker BLUE hai (bhale label orange ho) */
+.tg-bg  { background-color: #00aeef; } /* Cyan/Blue Marker */ 
+/* Screenshot me Non-HDL Marker GREY hai (bhale label green ho) */
+.hdl-bg { background-color: #707070; } /* Dark Grey Marker */
+
+
+.chart-value {
+    margin-top: 15px;
+    color: #000;
+}
+.chart-value .bold {  font-size: 1.1rem; }
+.chart-value .unit { font-size: 0.85rem; color: #666; }
+
+.footer-citation {
+    font-size: 0.95rem;
+    /* grid-area wahi rahega, bas text-align change karna hai */
+    grid-area: footer; 
+    
+    /* CHANGE: Pehle ye 'right' tha, isko 'center' karo */
+    text-align: center; 
+    
+    color: #ffffff;    
+    
+    font-size: 0.95rem; 
+    font-weight: 300;   
+    letter-spacing: 0.5px;
+    
+    margin-top: 15px;   
+    opacity: 0.9;        
+    width: 100%;
+}
+
+
+
+.next-btn {
+    background-color: #fc0e8f;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(252, 14, 143, 0.3);
+    transition: all 0.3s ease;
+    
+    /* Animation ke liye hidden state */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+}
+
+.next-btn:hover {
+    background-color: #d60070;
+    transform: translateY(-2px);
+}
+
+.next-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.next-btn .arrow-icon {
+    font-size: 1.2rem;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none; /* Hide hone ke baad click na ho */
+}
+
+/* --- Atherogenic Dyslipidemia Info Box --- */
+.dyslipidemia-info {
+    grid-area: charts; /* Same area as charts */
+    
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    width: 100%;
+    max-width: 500px;
+    margin-top: 40px;
+    
+    /* Default Hidden State */
+    opacity: 0;
+    transform: translateY(20px); /* Thoda niche se upar aayega */
+    transition: all 0.6s ease-in-out;
+    pointer-events: none;
+    
+    /* Position absolute taaki wo chart ke upar overlap karke animation kare (agar grid me issue ho) */
+    /* Lekin grid-area use kiya hai to hum hide/show logic JS se handle karenge */
+}
+
+.dyslipidemia-info.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Title Styling */
+.dys-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #ffffff;
+    text-transform: capitalize;
+    line-height: 1.2;
+}
+
+/* Card Styling (Grey Box) */
+.dys-card {
+    background-color: #ecf0f1; /* Light Grey like charts */
+    border-radius: 15px;
+    padding: 25px 20px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    color: #333;
+}
+
+.dys-header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.dys-value {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #0d8ebf; /* Teal/Blue color matching screenshot */
+    line-height: 1.1;
+    margin: 5px 0;
+}
+
+.dys-divider {
+    height: 2px;
+    width: 100%;
+    background-image: linear-gradient(to right, transparent, #bdc3c7, transparent); /* Dotted feel styling */
+    margin: 15px 0;
+}
+
+.dys-footer {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.3;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS (MOBILE VIEW: COMPACT & FIT) --- */
+@media (max-width: 767px) {
+    html, body {
+        overflow: auto;
+        touch-action: none; 
+        
+        height: auto; 
+        min-height: 100vh; 
+        
+        position: relative; 
+        width: 100%;
+
+        /* Mobile Background */
+        background-image: url('mobile.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll; 
+        
+        /* Flexbox Column Layout */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Top se start karo */
+        align-items: center;
+    }
+
+    .desktop-logo {
+        display: none; 
+    }
+
+    /* --- 2. Container Layout --- */
+    .container {
+        order: 1;
+        width: 100%;
+        height: auto; 
+        padding: 15px 15px 0px 15px; /* Top padding thodi kam ki */
+        
+        display: flex;
+        flex-direction: column;
+        
+        /* Elements ke beech ka gap 20px se 10px kiya taki fit aaye */
+        gap: 10px; 
+    }
+
+    .mobile-footer-container {
+    order: 2;
+    position: relative; /* Ye ZARURI hai taki logo aur button iske andar hi rahein */
+    
+    /* Display Flex hata diya, ab zarurat nahi */
+    width: 100%;
+    margin-top: 35px;
+    
+    /* Height fix rakhi taki container pitchak na jaye */
+    height: 80px; 
+    min-height: 80px; 
+}
+
+    .mobile-logo {
+    display: block;
+    width: 90px;
+    height: auto;
+    border-radius: 10px;
+
+    /* --- NEW CHANGE: EXACT CENTER LOGIC --- */
+    position: absolute;  /* Isko flow se nikal diya */
+    
+    top: 50%;            /* Upar se 50% niche */
+    left: 55%;           /* Left se 50% aage */
+    
+    /* Ye magic line hai jo exact center karegi */
+    transform: translate(-50%, -50%); 
+    
+    z-index: 100;        /* Button se niche rahe, but background se upar */
+}
+
+    .next-btn {
+        position: absolute; 
+        
+        /* 1. Positioning Fix: Right side align */
+        right: 5px; 
+        
+        /* 2. Alignment Fix: Exact Center (Logo ke barabar) */
+        top: 50%; /* Pehle 55% tha, ab 50% kiya taaki center me aaye */
+        transform: translateY(-50%); 
+        
+        /* 3. Size Fix: Button ko chhota kiya */
+        padding: 8px 16px;  /* Pehle 10px 20px tha, ab kam kiya */
+        font-size: 0.8rem;  /* Pehle 0.9rem tha, ab chhota kiya */
+        
+        /* Baki styles same rahenge */
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 101;
+        
+        /* Text wrap na ho isliye */
+        white-space: nowrap; 
+    }
+
+    .next-btn .arrow-icon {
+        font-size: 1rem; /* Pehle 1.2rem tha */
+    }
+    
+    /* Button Show hone par positioning maintain kare */
+    .next-btn.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50%); 
+    }
+
+
+    /* --- 3. Section Ordering & COMPACT SIZING --- */
+    
+    /* Top: Header */
+    .content-section {
+        order: 1;
+        width: 100%;
+        text-align: center;
+        margin-top: 5px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-badge {
+        font-size: 0.65rem; /* Font size kam kiya */
+        padding: 0;
+        margin-bottom: 3px;
+    }
+
+    .main-title {
+        font-size: 1.5rem; /* Title chhota kiya (Pehle 1.8rem tha) */
+        margin-bottom: 3px;
+        line-height: 1.1;
+    }
+
+    .sub-info {
+        justify-content: center;
+        font-size: 0.8rem;
+    }
+
+    /* Middle: Graphic Section (Heart) */
+    .graphic-section {
+        order: 2;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 5px 0; 
+    }
+
+    .heart-wrapper {
+        /* MAJOR CHANGE: Heart ka size 240px se 190px kiya taki screen pe jagah bache */
+        max-width: 190px; 
+        width: 100%;
+        position: relative;
+    }
+
+    /* --- HEART OVERLAY (STYLING PRESERVED) --- */
+    .heart-fill-overlay {
+        width: 95.4% !important;
+        height: 97% !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        filter: none !important;
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+    }
+
+    .heart-fill-overlay::after {
+        height: 22px !important;
+        bottom: calc(var(--fill-percent) - 8px) !important;
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+    }
+
+    /* Text Overlays on Heart (Scaled Down) */
+    .mace-overlay, .mace-overlay-5 {
+        font-size: 0.8rem; /* Text thoda chhota */
+        top: 35%; 
+    }
+
+    .mace-overlay-ldl {
+        top: 40%;
+        font-size: 0.8rem;
+    }
+
+    .mace-overlay .big-text, .mace-overlay-5 .big-text, .mace-overlay-ldl .big-text {
+        font-size: 2.2rem; /* % Text size adjust kiya heart ke hisab se */
+        margin-top: 0;
+    }
+
+    .mace-overlay-final {
+        font-size: 0.8rem;
+        top: 35%;
+    }
+    .mace-overlay-final .big-text {
+        font-size: 2.2rem;
+        margin-top: 0;
+    }
+
+    /* Bottom: Charts (Compact) */
+    .charts-container {
+        order: 3;
+        width: 100%;
+        margin-top: 0;
+        padding: 10px 5px; /* Padding kam ki */
+        background-color: rgba(236, 240, 241, 0.9);
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+    }
+
+    .chart-item {
+        width: 30%;
+        border-right-width: 1px;
+    }
+    .chart-label {
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+    }
+    
+    /* Bar height kam ki (100px -> 75px) taki scroll na karna pade */
+    .bar-container {
+        height: 100px; 
+    }
+    
+    .bar-tube { width: 25px; } /* Tube thodi patli */
+    .bar-marker { width: 40px; height: 8px; }
+    
+    .chart-value { margin-top: 5px; }
+    .chart-value .bold { font-size: 0.85rem; }
+    .chart-value .unit { font-size: 0.65rem; }
+
+    /* Footer: Citation */
+    .footer-citation {
+        order: 4;
+        text-align: center;
+        font-size: 0.65rem;
+        opacity: 0.9;
+        margin-top: 5px;
+        width: 100%;
+    }
+
+    .dyslipidemia-info {
+        order: 3; /* Mobile flex order */
+        margin-top: 0;
+        padding: 0 10px;
+    }
+    .dys-title { font-size: 1.2rem; margin-bottom: 10px; }
+    .dys-card { padding: 15px; }
+    .dys-header { font-size: 0.8rem; }
+    .dys-value { font-size: 2rem; }
+    .dys-footer { font-size: 0.9rem; }
+
+}
+
+/* --- TABLET VIEW (Vertical Layout: Heart -> Content -> Chart) --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    /* 1. Base Setup */
+    html, body {
+        overflow-y: hidden; 
+        overflow-x: hidden;
+        touch-action: auto; 
+        
+        height: auto;     /* Height auto rakhi taki cut na ho */
+        min-height: 100vh;
+        width: 100%;
+        position: relative; /* Fixed hata diya taki scroll ho sake */
+        
+        background-image: url('mobile.png'); 
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed; /* Background fix rahega scroll pe */
+        
+        display: block; /* Flex hata ke block kiya for scrolling flow */
+    }
+
+    /* 2. Logo Logic: Top-Right Fixed */
+    .mobile-logo { display: none; }
+
+    .desktop-logo {
+        display: block;
+        width: 110px;
+        position: absolute; /* Absolute taki flow kharab na kare */
+        top: 20px;
+        left: auto;
+        left: 25px; /* Top-Left placement */
+    }
+
+    /* 3. Container: Vertical Stack Layout (1 Column) */
+    .container {
+        width: 100%;
+        max-width: 700px; /* Tablet pe jyada wide na ho */
+        padding: 60px 20px 20px 20px; /* Top padding jyada di taki Logo se overlap na ho */
+        margin: 0 auto; /* Center container */
+        
+        display: grid;
+        grid-template-columns: 1fr; /* Single Column */
+        
+        /* ORDER CHANGE: Heart Top -> Content Middle -> Charts Bottom */
+        grid-template-areas: 
+            "graphic"
+            "content"
+            "charts"
+            "footer"; 
+            
+        row-gap: 25px; /* Elements ke beech gap */
+        justify-items: center; /* Sab kuch horizontal center */
+    }
+
+    /* 4. Sections Adjustment */
+    
+    /* -- GRAPHIC (HEART) -- */
+    .graphic-section { 
+        grid-area: graphic; 
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .heart-wrapper {
+        max-width: 320px; /* Stacked view me size thoda bada rakh sakte hain */
+        width: 100%;
+    }
+
+    /* -- CONTENT (TEXT) -- */
+    .content-section {
+        grid-area: content;
+        align-items: center; /* Center Align */
+        text-align: center;  /* Center Text */
+        width: 100%;
+    }
+    
+    .sub-info {
+        justify-content: center; /* Sub-info center */
+    }
+
+    /* -- CHARTS -- */
+    .charts-container {
+        grid-area: charts;
+        width: 100%;
+        max-width: 550px; /* Chart jyada wide na ho */
+        margin-top: 10px;
+        padding: 20px;
+        justify-content: space-around; /* Bars me space */
+    }
+
+    /* 5. Heart Text Overlay Fits */
+    /* Size adjust kiya kyuki heart 320px hai */
+    .mace-overlay, .mace-overlay-5 {
+        top: 36%; 
+        font-size: 1.2rem; 
+        line-height: 1.2;
+    }
+
+    .mace-overlay-ldl {
+        top: 40%;
+        font-size: 1.2rem;
+        line-height: 1.2;
+    }
+
+    .mace-overlay .big-text, 
+    .mace-overlay-5 .big-text, 
+    .mace-overlay-ldl .big-text {
+        font-size: 3rem; 
+        margin-top: 5px;
+    }
+    
+    .mace-overlay-5 { top: 34%; } /* 5% wala thoda upar */
+
+    .mace-overlay-final {
+        top: 36%;
+        font-size: 1.2rem;
+    }
+    .mace-overlay-final .big-text {
+        font-size: 3rem;
+        margin-top: 5px;
+    }
+
+    /* 6. Typography Adjustments */
+    .header-badge { font-size: 0.9rem; margin-bottom: 5px; }
+    .main-title { font-size: 2.5rem; margin-bottom: 10px; }
+    .sub-info p { font-size: 1rem; }
+
+    /* 7. Chart Elements Scaling */
+    .chart-label { font-size: 1.1rem; }
+    .bar-container { height: 140px; }
+    .bar-tube { width: 38px; }
+    .bar-marker { width: 55px; }
+
+    /* 8. Footer Alignment */
+    .footer-citation {
+        grid-area: footer;
+        text-align: center;
+        font-size: 0.85rem;
+        margin-top: 10px;
+        padding-bottom: 20px; /* Scroll end ke liye padding */
+    }
+
+    /* Mobile footer (Next Button) positioning */
+    .mobile-footer-container {
+        position: fixed; /* Scroll hone par bhi dikhe */
+        bottom: 20px;
+        right: 20px;
+        width: auto;
+        z-index: 999;
+    }
+    
+    .next-btn {
+        padding: 10px 25px;
+        font-size: 1rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Shadow taki text ke upar distinct dikhe */
+    }
+
+    /* IMPORTANT: Heart Animation Overlay Preservation (No Changes) */
+    .heart-fill-overlay {
+        width: 95.4% !important;
+        height: 97% !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        filter: none !important; 
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+    }
+    
+    .heart-fill-overlay::after {
+         bottom: calc(var(--fill-percent) - 9px) !important;
+         height: 30px !important;
+    }
+
+    .dyslipidemia-info {
+        grid-area: charts;
+        margin-top: 10px;
+    }
+    .dys-title { font-size: 1.5rem; }
+}
+
+/* --- LARGE SCREENS (1600px and up) - REVISED (Balanced Size) --- */
+@media (min-width: 1600px) {
+    
+    /* 1. Base Scaling */
+    body {
+        padding: 15px; /* Padding thodi normal rakhi */
+    }
+
+    /* 2. Container Expansion */
+    .container {
+        /* Pehle 1450px tha, ab 1300px kiya (Balanced) */
+        max-width: 1300px; 
+        padding: 50px;    
+        column-gap: 60px; /* Gap thoda kam kiya taaki content connected lage */
+    }
+
+    /* 3. Typography Scaling */
+    .header-badge {
+        font-size: 1.1rem; /* Thoda sa bada standard se */
+        margin-bottom: 10px;
+    }
+
+    .main-title {
+        /* Pehle 4.2rem tha, ab 3.6rem kiya */
+        font-size: 3.6rem; 
+        margin-bottom: 15px;
+    }
+
+    .sub-info p {
+        font-size: 1.2rem;
+    }
+
+    /* 4. Heart Graphic Scaling */
+    .heart-wrapper {
+        /* Pehle 480px tha, ab 420px kiya */
+        max-width: 420px; 
+    }
+
+    /* --- Heart Overlay Text Fits --- */
+    
+    /* Common Text */
+    .mace-overlay, 
+    .mace-overlay-5, 
+    .mace-overlay-ldl {
+        font-size: 1.7rem; /* 2rem se kam karke 1.7rem kiya */
+        line-height: 1.2;
+    }
+
+    /* Big Percentage Text */
+    .mace-overlay .big-text, 
+    .mace-overlay-5 .big-text, 
+    .mace-overlay-ldl .big-text {
+        font-size: 5rem; /* 6rem se kam karke 5rem kiya */
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
+    /* Positioning Tweak (Text thoda chota hua hai to position adjust ki) */
+    .mace-overlay { top: 36%; }
+    .mace-overlay-5 { top: 34%; }
+    .mace-overlay-ldl { top: 39%; }
+
+    .mace-overlay-final {
+        font-size: 1.7rem;
+        top: 36%;
+    }
+    .mace-overlay-final .big-text {
+        font-size: 5rem;
+        margin-top: 2px;
+    }
+
+    /* 5. Charts Scaling */
+    .charts-container {
+        /* Pehle 700px tha, ab 600px kiya */
+        max-width: 600px; 
+        padding: 25px;
+        margin-top: 50px;
+        border-radius: 18px;
+    }
+
+    .chart-label {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .bar-container {
+        height: 200px; /* 240px se 200px kiya */
+    }
+
+    .bar-tube {
+        width: 50px; /* Tube width 60px se 50px ki */
+        border-radius: 35px;
+    }
+
+    .bar-marker {
+        width: 70px; /* Marker width 85px se 70px ki */
+        height: 16px; 
+        bottom: 12px;
+        border-radius: 10px;
+    }
+
+    .chart-value {
+        margin-top: 15px;
+    }
+
+    .chart-value .bold {
+        font-size: 1.3rem;
+    }
+
+    .chart-value .unit {
+        font-size: 1rem;
+    }
+
+    /* Footer Scale */
+    .footer-citation {
+        font-size: 1rem;
+        margin-top: 25px;
+    }
+
+    .dyslipidemia-info { max-width: 600px; margin-top: 50px; }
+    .dys-title { font-size: 2.2rem; }
+    .dys-value { font-size: 4rem; }
+    .dys-footer { font-size: 1.3rem; }
+}
+

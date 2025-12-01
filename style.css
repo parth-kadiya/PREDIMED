@@ -1,0 +1,201 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* No scrollbars for desktop default */
+    font-family: Arial, sans-serif;
+}
+
+/* =========================================
+   MAIN CONTAINER & BACKGROUND (Desktop Default)
+   ========================================= */
+.main-container {
+    width: 100%;
+    height: 100vh;
+    
+    /* Background fit logic: Stretch to fill completely */
+    background-size: 100% 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Flexbox for positioning */
+    display: flex;
+    
+    /* DESKTOP: Right Center */
+    background-image: url('desk_bg.png');
+    
+    /* Desktop par button Right side rahega */
+    justify-content: flex-end; 
+    align-items: center;       
+}
+
+/* =========================================
+   BUTTON STYLES & ANIMATION
+   ========================================= */
+.wave-btn {
+    /* Desktop size & gap */
+    padding: 15px 50px;
+    font-size: 24px;
+    margin-right: 15%; /* Right gap for Desktop */
+    
+    font-weight: bold;
+    color: white;
+    
+    /* Tumhara Gradient Color */
+    background: linear-gradient(to right, #b6419b, #05bef0);
+    
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    outline: none;
+    
+    /* Shadow bhi thoda purple tone me adjust kiya hai taaki gradient ke sath match kare */
+    box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7);
+    
+    animation: pulse-wave 2s infinite;
+    transition: transform 0.2s;
+    z-index: 10;
+}
+
+.wave-btn:hover {
+    transform: scale(1.05);
+    /* Hover par gradient reverse direction me */
+    background: linear-gradient(to right, #05bef0, #b6419b);
+}
+
+@keyframes pulse-wave {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 25px rgba(182, 65, 155, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+}
+
+/* =========================================
+   MOBILE SIZE 1: Smallest (Max Width: 361px)
+   ========================================= */
+@media screen and (max-width: 361px) {
+     html, body {
+        overflow-y: auto; 
+        height: auto;     
+    }
+    
+    .main-container {
+        background-image: url('mob_bg.png');
+        background-position: top center;
+        background-size: 100% auto; 
+        height: auto;      
+        min-height: 100vh; 
+        
+        /* CHANGE: Horizontal Center & Vertical Bottom */
+        justify-content: center; 
+        align-items: flex-end;        
+        
+        /* Bottom se thoda space taaki button kate na */
+        padding-bottom: 150px; 
+    }
+
+    .wave-btn {
+        padding: 8px 22px;
+        font-size: 14px;
+        
+        /* Margin 0 kar diya taaki perfect center me aaye */
+        margin: 0; 
+        
+        /* Thoda sa extra gap agar padding kam pade */
+    }
+
+    @keyframes pulse-wave {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+    }
+}
+
+/* =========================================
+   MOBILE SIZE 2: Narrow Foldables (362px - 376px)
+   ========================================= */
+@media screen and (min-width: 362px) and (max-width: 376px) {
+     html, body {
+        overflow-y: auto; 
+        height: auto;     
+    }
+    
+    .main-container {
+        background-image: url('mob_bg.png');
+        background-position: top center;
+        background-size: 100% auto; 
+        height: auto;      
+        min-height: 100vh; 
+        
+        /* CHANGE: Horizontal Center & Vertical Bottom */
+        justify-content: center; 
+        align-items: flex-end;        
+        
+        /* Bottom se thoda space */
+        padding-bottom: 50px; 
+    }
+
+    .wave-btn {
+        padding: 8px 22px;
+        font-size: 14px;
+        
+        /* Margin 0 kar diya taaki perfect center me aaye */
+        margin: 0; 
+        
+    }
+
+    @keyframes pulse-wave {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+    }
+}
+
+/* =========================================
+   MOBILE SIZE 3: Tablets/Large Phones (377px - 1025px)
+   ========================================= */
+@media screen and (min-width: 377px) and (max-width: 1025px) {
+
+    html, body {
+        overflow-y: auto; 
+        height: auto;     
+    }
+    
+    .main-container {
+        background-image: url('mob_bg.png');
+        background-position: top center;
+        background-size: 100% auto; 
+        height: auto;      
+        min-height: 100vh; 
+        
+        /* CHANGE: Horizontal Center & Vertical Bottom */
+        justify-content: center; 
+        align-items: flex-end;        
+        
+        /* Bottom se thoda space */
+        padding-bottom: 220px; 
+    }
+
+    .wave-btn {
+        padding: 10px 30px; /* Tablet pe thoda bada button achha lagega */
+        font-size: 16px;
+        
+        /* Margin 0 kar diya taaki perfect center me aaye */
+        margin: 0; 
+        
+    }
+
+    @keyframes pulse-wave {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(182, 65, 155, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(182, 65, 155, 0); }
+    }
+}
