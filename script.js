@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startBtn.addEventListener('click', () => {
         // User ko 2.html pe redirect karna
-        window.location.href = '2.html';
+        window.location.href = 'Activity.html';
     });
 });

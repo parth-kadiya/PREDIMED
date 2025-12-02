@@ -306,8 +306,8 @@ if (nextBtn) {
         
         // --- PHASE 2: Agar Animation ho chuka hai (User ne wapis click kiya) ---
         else {
-            // Ab seedha 3.html pe bhej do
-            window.location.href = '3.html';
+            // Ab seedha Thankyou.html pe bhej do
+            window.location.href = 'Thankyou.html';
         }
     });
 }
